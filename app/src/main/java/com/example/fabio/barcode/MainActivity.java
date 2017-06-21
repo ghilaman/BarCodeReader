@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText Operatore;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Operatore =(EditText) findViewById(R.id.editText);
         Inventario=(Spinner) findViewById(R.id.spinner);
         b = (Button) findViewById(R.id.button);
-        s = getPreferences(MODE_PRIVATE);
+        s = getSharedPreferences("app",MODE_PRIVATE);
         arraySpinner = new String[]{"Bologna","Roma","Milano"};
 
         if(Operatore.requestFocus()) {
@@ -41,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                s.edit().putString("Operatore",Operatore.getText().toString()).commit();
+                s.edit().putString("Operatore",Operatore.getText().toString()).apply();
+                s.edit().putString("Inventario",Inventario.getSelectedItem().toString()).apply();
+                if (s.contains("Operatore"))
+                    Toast.makeText(getApplicationContext(),"salvato nelle shared",Toast.LENGTH_LONG);
                 startActivity(new Intent(getApplicationContext(),Scaffale.class));
             }
         });
