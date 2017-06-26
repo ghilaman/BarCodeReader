@@ -1,7 +1,7 @@
 package com.example.fabio.barcode;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,19 +10,19 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.fabio.barcode.Barcode.BarcodeCaptureActivity;
+import com.example.fabio.barcode.R;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+public class Scaffale extends Activity  {
 
-
-public class Scaffale extends AppCompatActivity {
-
+    // use a compound button so either checkbox or switch widgets work.
     private CompoundButton autoFocus;
     private CompoundButton useFlash;
+    private CompoundButton autoCapture;
     private TextView statusMessage;
     private TextView barcodeValue;
-    private Button b;
-
+    Button b ;
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String TAG = "BarcodeMain";
@@ -30,24 +30,23 @@ public class Scaffale extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scaffale);
+        setContentView(R.layout.activity_layout);
 
         statusMessage = (TextView)findViewById(R.id.status_message);
         barcodeValue = (TextView)findViewById(R.id.barcode_value);
 
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
+        autoCapture = (CompoundButton) findViewById(R.id.use_auto);
 
         b= (Button) findViewById(R.id.read_barcode);
-
-
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
-                intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+                intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
-
+                intent.putExtra(BarcodeCaptureActivity.AutoCapture, true);
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
             }
         });
@@ -58,8 +57,6 @@ public class Scaffale extends AppCompatActivity {
      *
      * @param v The view that was clicked.
      */
-
-
 
 
     /**

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -45,9 +46,26 @@ public class MainActivity extends AppCompatActivity {
                 s.edit().putString("Operatore",Operatore.getText().toString()).apply();
                 s.edit().putString("Inventario",Inventario.getSelectedItem().toString()).apply();
                 if (s.contains("Operatore"))
-                    Toast.makeText(getApplicationContext(),"salvato nelle shared",Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),"salvato nelle shared",Toast.LENGTH_LONG).show();
+
                 startActivity(new Intent(getApplicationContext(),Scaffale.class));
             }
         });
     }
+
+    public double getHeight ()
+    {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int height = displaymetrics.heightPixels;
+        return height;
+    }
+    public double getWidth ()
+    {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        return width;
+    }
+
 }

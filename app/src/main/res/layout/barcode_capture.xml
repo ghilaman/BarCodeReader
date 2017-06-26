@@ -14,9 +14,8 @@
       android:layout_height="match_parent">
 
     <com.example.fabio.barcode.Barcode.GraphicOverlay
-        android:id="@+id/graphicOverlay"
-        android:layout_width="10dp"
-        android:layout_height="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
   </com.example.fabio.barcode.Barcode.CameraSourcePreview>
 

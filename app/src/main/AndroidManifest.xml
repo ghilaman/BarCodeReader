@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Scaffale" />
+        <activity android:name=".Scaffale"
+            android:exported="true" />
         <activity
             android:name=".Barcode.BarcodeCaptureActivity"
             android:label="Read Barcode"

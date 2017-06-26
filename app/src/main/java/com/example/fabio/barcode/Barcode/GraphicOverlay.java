@@ -53,6 +53,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     private float mHeightScaleFactor = 1.0f;
     private int mFacing = CameraSource.CAMERA_FACING_BACK;
     private Set<T> mGraphics = new HashSet<>();
+    private T mFirstGraphic;
 
     /**
      * Base class for a custom graphics object to be rendered within the graphic overlay.  Subclass
@@ -130,6 +131,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     public void clear() {
         synchronized (mLock) {
             mGraphics.clear();
+            mFirstGraphic = null;
         }
         postInvalidate();
     }
@@ -140,6 +142,9 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     public void add(T graphic) {
         synchronized (mLock) {
             mGraphics.add(graphic);
+            if (mFirstGraphic == null) {
+                mFirstGraphic = graphic;
+            }
         }
         postInvalidate();
     }
@@ -150,32 +155,22 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     public void remove(T graphic) {
         synchronized (mLock) {
             mGraphics.remove(graphic);
+            if (mFirstGraphic != null && mFirstGraphic.equals(graphic)) {
+                mFirstGraphic = null;
+            }
         }
         postInvalidate();
     }
 
     /**
-     * Returns a copy (as a list) of the set of all active graphics.
-     * @return list of all active graphics.
+     * Returns the first (oldest) graphic added.  This is used
+     * to get the barcode that was detected first.
+     * @return graphic containing the barcode, or null if no barcodes are detected.
      */
-    public List<T> getGraphics() {
+    public T getFirstGraphic() {
         synchronized (mLock) {
-            return new Vector(mGraphics);
+            return mFirstGraphic;
         }
-    }
-
-    /**
-     * Returns the horizontal scale factor.
-     */
-    public float getWidthScaleFactor() {
-        return mWidthScaleFactor;
-    }
-
-    /**
-     * Returns the vertical scale factor.
-     */
-    public float getHeightScaleFactor() {
-        return mHeightScaleFactor;
     }
 
     /**
