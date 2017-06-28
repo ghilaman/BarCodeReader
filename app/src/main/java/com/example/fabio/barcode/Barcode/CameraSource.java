@@ -50,7 +50,7 @@ import java.util.Map;
 
 // Note: This requires Google Play Services 8.1 or higher, due to using indirect byte buffers for
 // storing images.
-
+// TODO: 28/06/2017 find camera detector and make it able to learn ean-13 barcode only
 /**
  * Manages the camera in conjunction with an underlying
  * {@link Detector}.  This receives preview frames from the camera at

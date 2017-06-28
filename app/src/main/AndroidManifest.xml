@@ -21,10 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Barcode.BarcodeCaptureActivity"
-            android:label="Read Barcode"
+            android:name=".Barcode.Scaffale"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:label="Read Barcode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Barcode.Articolo"></activity>
     </application>
 
 </manifest>

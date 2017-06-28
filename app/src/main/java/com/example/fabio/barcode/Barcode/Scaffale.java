@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,7 +34,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.EditText;
@@ -50,21 +53,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-
-import android.hardware.Camera;
-import android.os.Build;
-
-import com.google.android.gms.common.api.CommonStatusCodes;
-
-
-import java.io.IOException;
-
 /**
  * Activity for the multi-tracker app.  This app detects barcodes and displays the value with the
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and ID of each barcode.
  */
-public final class BarcodeCaptureActivity extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeDetectorListener {
+public final class Scaffale extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeDetectorListener {
     private static final String TAG = "Barcode-reader";
 
     // intent request code to handle updating play services if needed.
@@ -87,15 +81,16 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
-
+    SharedPreferences s;
     /**
      * Initializes the UI and creates the detector pipeline.
      */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.barcode_capture);
+        setContentView(R.layout.activity_scaffale);
 
+        s = getSharedPreferences("app",MODE_PRIVATE);
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphicOverlay);
         e = (EditText) findViewById(R.id.editText2);
@@ -121,6 +116,29 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
 //        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_scaffale, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_Menu) {
+            Intent i = new Intent(getApplicationContext(), Articolo.class);
+            startActivity(i);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -349,6 +367,12 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
             e.setText(data.displayValue);
             Toast.makeText(getApplicationContext(),"barcode letto",Toast.LENGTH_LONG).show();
             Log.d(TAG, "Barcode read: " + data.displayValue);
+            SharedPreferences.Editor e = s.edit();
+            e.putString("Barcode",data.displayValue);
+            e.apply();
+            e.commit();
+            if(s.contains("Barcode"))
+                Toast.makeText(getApplicationContext(),"Barcode salvato",Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(),R.string.barcode_error,Toast.LENGTH_LONG).show();
             Log.d(TAG, "No barcode captured, intent data is null");
@@ -365,7 +389,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
  */
 //    private boolean onTap(float rawX, float rawY) {
 //
-//        //TODO: use the tap position to select the barcode.
+//
 //
 //        BarcodeGraphic graphic = mGraphicOverlay.getFirstGraphic();
 //        Barcode barcode = null;

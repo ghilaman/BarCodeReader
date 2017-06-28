@@ -11,10 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fabio.barcode.Barcode.BarcodeCaptureActivity;
+import com.example.fabio.barcode.Barcode.Scaffale;
 
 public class MainActivity extends AppCompatActivity {
     EditText Operatore;
@@ -48,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 s.edit().putString("Operatore",Operatore.getText().toString()).apply();
                 s.edit().putString("Inventario",Inventario.getSelectedItem().toString()).apply();
                 if (s.contains("Operatore"))
-                    Toast.makeText(getApplicationContext(),"salvato nelle shared",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"salvati nelle shared",Toast.LENGTH_LONG).show();
 
-                startActivity(new Intent(getApplicationContext(),BarcodeCaptureActivity.class));
+                startActivity(new Intent(getApplicationContext(),Scaffale.class));
             }
         });
     }
