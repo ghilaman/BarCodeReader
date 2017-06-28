@@ -100,7 +100,7 @@ public class CameraSourcePreview extends ViewGroup {
                     // Swap width and height sizes when in portrait, since it will be rotated by
                     // 90 degrees
 
-                    mOverlay.setCameraInfo(min, max/2, mCameraSource.getCameraFacing());
+                    mOverlay.setCameraInfo(min, max, mCameraSource.getCameraFacing());
                 } else {
                     mOverlay.setCameraInfo(max, min, mCameraSource.getCameraFacing());
                 }

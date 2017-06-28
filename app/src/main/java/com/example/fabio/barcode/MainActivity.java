@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fabio.barcode.Barcode.BarcodeCaptureActivity;
+
 public class MainActivity extends AppCompatActivity {
     EditText Operatore;
     Spinner Inventario;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 if (s.contains("Operatore"))
                     Toast.makeText(getApplicationContext(),"salvato nelle shared",Toast.LENGTH_LONG).show();
 
-                startActivity(new Intent(getApplicationContext(),Scaffale.class));
+                startActivity(new Intent(getApplicationContext(),BarcodeCaptureActivity.class));
             }
         });
     }
