@@ -27,46 +27,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Operatore =(EditText) findViewById(R.id.editText);
-        Inventario=(Spinner) findViewById(R.id.spinner);
+        Operatore = (EditText) findViewById(R.id.editText);
+        Inventario = (Spinner) findViewById(R.id.spinner);
         b = (Button) findViewById(R.id.button);
-        s = getSharedPreferences("app",MODE_PRIVATE);
-        arraySpinner = new String[]{"Bologna","Roma","Milano"};
+        s = getSharedPreferences("app", MODE_PRIVATE);
+        arraySpinner = new String[]{"Bologna", "Roma", "Milano"};
 
-        if(Operatore.requestFocus()) {
+        if (Operatore.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.spinner_layout, arraySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, arraySpinner);
         adapter.setDropDownViewResource(R.layout.spinner_layout);
         Inventario.setAdapter(adapter);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                s.edit().putString("Operatore",Operatore.getText().toString()).apply();
-                s.edit().putString("Inventario",Inventario.getSelectedItem().toString()).apply();
+                s.edit().putString("Operatore", Operatore.getText().toString()).apply();
+                s.edit().putString("Inventario", Inventario.getSelectedItem().toString()).apply();
                 if (s.contains("Operatore"))
-                    Toast.makeText(getApplicationContext(),"salvati nelle shared",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "salvati nelle shared", Toast.LENGTH_LONG).show();
 
-                startActivity(new Intent(getApplicationContext(),Scaffale.class));
+                startActivity(new Intent(getApplicationContext(), Scaffale.class));
             }
         });
     }
 
-    public double getHeight ()
-    {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int height = displaymetrics.heightPixels;
-        return height;
-    }
-    public double getWidth ()
-    {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = displaymetrics.widthPixels;
-        return width;
-    }
 
 }

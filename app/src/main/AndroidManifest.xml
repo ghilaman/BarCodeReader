@@ -23,10 +23,16 @@
         <activity
             android:name=".Barcode.Scaffale"
             android:exported="true"
-            android:label="Read Barcode"
+            android:label="Scaffale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Barcode.Articolo"></activity>
+        <activity
+            android:name=".Barcode.Articolo"
+            android:exported="true"
+            android:label="Articolo"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Compilazione"></activity>
     </application>
 
 </manifest>
